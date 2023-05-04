@@ -4,7 +4,7 @@ from scipy.optimize import curve_fit
 from matplotlib import pyplot
 
 
-class SearchPlots:
+class SortPlots:
     BUBBLE_SORT = "bubble sort"
 
     def __init__(self, runtimes: SortRunTimes):
@@ -29,9 +29,9 @@ class SearchPlots:
             input_size, runtime = list(runtimes.keys()), list(runtimes.values())
             # get fitted parameter after regression:
             if sort_name == self.BUBBLE_SORT:
-                objective = SearchPlots.square_objective
+                objective = SortPlots.square_objective
             else:
-                objective = SearchPlots.linearithmic_objective
+                objective = SortPlots.linearithmic_objective
             fitted_parameters, covariance = curve_fit(objective, input_size, runtime)
             self.fitted_parameters[sort_name] = fitted_parameters
 
@@ -46,11 +46,11 @@ class SearchPlots:
             # draw regression line
             x_line = arange(min(input_sizes), max(input_sizes), 1)
             if sort_name == self.BUBBLE_SORT:
-                objective = SearchPlots.square_objective
+                objective = SortPlots.square_objective
                 # print fitted objective function with 1 decimal precision ( running time in nano seconds)
                 print(sort_name, ': running_time = %.1f * n^2 + %.1f' % (parameters[0], parameters[1]))
             else:
-                objective = SearchPlots.linearithmic_objective
+                objective = SortPlots.linearithmic_objective
                 print(sort_name, ': running_time = log(%.1f * n) + %.1f' % (parameters[0], parameters[1]))
             y_line = objective(x_line, *parameters)
             pyplot.xlabel(sort_name + " input size")
@@ -61,7 +61,7 @@ class SearchPlots:
 
 def draw_plot_test():
     sort_run_times = SortRunTimes()
-    search_plots = SearchPlots(sort_run_times)
+    search_plots = SortPlots(sort_run_times)
     search_plots.draw_plots()
 
 
